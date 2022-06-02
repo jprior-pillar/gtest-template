@@ -72,6 +72,9 @@ namespace {
 
 // Tests Factorial().
 
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
+// TADA THIS IS A SECTION
+
 // Tests factorial of negative numbers.
 TEST(FactorialTest, Negative) {
   // This test is named "Negative", and belongs to the "FactorialTest"
