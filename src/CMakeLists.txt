@@ -1,4 +1,4 @@
-add_library(sut STATIC sample1.cc)
+add_library(sut STATIC factorial.cc)
 target_include_directories(sut PUBLIC .)
 
 
