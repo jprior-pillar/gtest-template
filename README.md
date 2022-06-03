@@ -9,18 +9,24 @@ $> cd build
 $build> make test
 ```
 
+## Documentation
+
+Documentation is created in Use [doxygen](https://www.doxygen.nl/). To generate
+the commands, simply install it and run the `doxygen` command.
+
 ## Resources
 
-* [GoogleTest](https://github.com/google/googletest)
 * [CMake](https://cmake.org/)
   * [An Introduction to Modern CMake](https://cliutils.gitlab.io/modern-cmake/)
   * [Modern CMake for C++](https://github.com/PacktPublishing/Modern-CMake-for-Cpp)
+* Testing
+  * Testing Frameworks
+    * [GoogleTest](https://github.com/google/googletest)
+    * [Boost.Test](https://github.com/boostorg/test)
+    * [Catch2](https://github.com/catchorg/Catch2)
+    * [doctest](https://github.com/doctest/doctest)
 * [xUnit Test Patterns](http://xunitpatterns.com/index.html)
   * [Goals of Test Automation](http://xunitpatterns.com/Goals%20of%20Test%20Automation.html)
-
-## Ideas
-
-* Use [doxygen](https://www.doxygen.nl/) comments to document what the unit test is doing.
 
 ## Checklist
 
