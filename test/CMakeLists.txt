@@ -8,8 +8,13 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-add_executable(unit_tests
-        factorial_test.cpp)
-target_link_libraries(unit_tests PRIVATE sut gtest_main)
 include(GoogleTest)
-gtest_discover_tests(unit_tests)
+
+add_executable(factorial_tests factorial_test.cc)
+target_link_libraries(factorial_tests PRIVATE sut_factorial gtest_main)
+gtest_discover_tests(factorial_tests)
+
+add_executable(my_string_tests my_string_test.cc)
+target_link_libraries(my_string_tests PRIVATE sut_my_string gtest_main)
+gtest_discover_tests(my_string_tests)
+

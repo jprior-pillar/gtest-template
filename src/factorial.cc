@@ -1,8 +1,13 @@
 // A sample program demonstrating using Google C++ testing framework.
 
-#include "../include/factorial.h"
+#include "factorial.h"
 
-// Returns n! (the factorial of n).  For negative n, n! is defined to be 1.
+/// Factorial
+///
+/// Returns n! (the factorial of n).  For negative n, n! is defined to be 1.
+///
+/// \param n
+/// \return
 int Factorial(int n) {
   int result = 1;
   for (int i = 1; i <= n; i++) {
