@@ -1,17 +1,18 @@
 # NEATO Unit Test Coding Template
 
-## Setup
+This project is designed to provide examples of best practices for arranging and documenting tests written 
+with GTest.
 
-```
-$> sudo apt get doxygen
-```
+Includes examples of 
 
-### Documentation
-
-Documentation is created in Use [doxygen](https://www.doxygen.nl/). To generate
-the commands, simply install it and run the `doxygen` command.
+* [Test fixtures](https://github.com/google/googletest/blob/main/docs/primer.md#user-content-test-fixtures-using-the-same-data-configuration-for-multiple-tests-same-data-multiple-tests)
+* [Testing exception](https://google.github.io/googletest/reference/assertions.html#exceptions)
+* [Death tests](https://github.com/google/googletest/blob/main/docs/advanced.md#user-content-death-tests)
 
 ## Getting Started
+
+You will need [cmake](https://cmake.org/) and the ability to build and run C++ code. See the Google Test 
+[Quickstart documentation](https://google.github.io/googletest/quickstart-cmake.html) for more information.
 
 ```
 $> cmake -S . -B build
@@ -20,42 +21,86 @@ $> cd build
 $build> make test
 ```
 
-These commands are in the `run` shell script for convenience. 
+These commands are in the `run` shell script for convenience.
+
+## Documentation
+
+Documentation is created in Use [doxygen](https://www.doxygen.nl/). To generate
+the commands, simply install it and run the `doxygen` command.
+
+### Setup
+
+You will need [Doxygen](https://doxygen.nl/index.html) and [Graphviz](http://www.graphviz.org/) to generate the 
+documentation.
+
+#### Linux
+
+```
+$> sudo apt update
+$> sudo apt get doxygen graphviz
+$> doxygen
+```
+
+#### OSX
+
+```
+$> brew install doxygen graphviz
+```
 
 ## Template
 
-```c++
-namespace Tests {
+```
+#include "gtest/gtest.h"
+
+/**\file template_cc
+ *
+ * \test Google Test Template
+ *
+ * Provide an overview of the types of tests that are included in the test suite
+ *
+ * Type               | Test Name  | Description
+ * :----------------  | :--------- | :---------
+ * Positive           | Positive   | Validate expected input
+ * Negative           | Negative   | Validate inputs outside of expectations
+ * Exception          | Exception  | Validate system throwing proper exceptions
+ * Death              | Death      | Verify proper shutdown on system failure
+ * Parameterized      | Param      | Series of tests of a specific type parameterized
+ */
+namespace TemplateTests {
+    ////////////////////////////////////////////////////////////
+    // Constants
+
+    const int constantInteger = 1;
+
+    ////////////////////////////////////////////////////////////
+    // Test Fixtures
     class TemplateTestFixture : public testing::Test {
- protected:  
-  void SetUp() override {
-    
-  }
-  
-  virtual void TearDown() {
-  
-  }
+    protected:
+        void SetUp() override {
 
-  // A helper function that some test uses.
-  static int HelperFunction(int n) { return 2 * n; }
+        }
 
-  // A helper function for testing Queue::Map().
-  void MapTester(const Queue<int>* q) {
-    // Creates a new queue, where each element is twice as big as the
-    // corresponding one in q.
-    const Queue<int>* const new_q = q->Map(Double);
+        virtual void TearDown() override {
 
-    // Verifies that the new queue has the same size as q.
-    ASSERT_EQ(q->Size(), new_q->Size());
+        }
 
-    // Verifies the relationship between the elements of the two queues.
-    for (const QueueNode<int>*n1 = q->Head(), *n2 = new_q->Head();
-         n1 != nullptr; n1 = n1->next(), n2 = n2->next()) {
-      EXPECT_EQ(2 * n1->element(), n2->element());
+        static int HelperFunction(int n) {
+            return n + 1;
+        }
+    };
+
+    TEST(TemplateTest, Positive) {
+        EXPECT_EQ(constantInteger, 1);
     }
 
-    delete new_q;
-  }
+    TEST(TemplateTest, Negative) {
+        EXPECT_NE(1, 2);
+    }
+
+    // Test using a test fixture need to be in their own test suite.
+    TEST_F(TemplateTestFixture, PositiveFixture) {
+        EXPECT_EQ(2, HelperFunction(1));
+    }
 }
 ```
 
@@ -75,10 +120,11 @@ namespace Tests {
 A boundary condition is a type of test 
 A test suite's boundary conditions describe the 
 
-* Positive - Does it handle expected input correctly
-* Negative - Does it handle handle negative input correctly
-  * Exception - Does it throw the correct exception
-  * Trip
+* Positive - Does it handle expected input correctly?
+* Negative - Does it handle negative input correctly?
+  * [Exception](https://github.com/google/googletest/blob/main/docs/reference/assertions.md#user-content-exception-assertions-exceptions) - Does it throw the correct exception?
+  * [Death Test](https://github.com/google/googletest/blob/main/docs/advanced.md#user-content-death-tests) - Does it exit with the correct code and message?
+* [Parameterized](https://github.com/google/googletest/blob/main/docs/advanced.md#user-content-value-parameterized-tests)
 
 ### Given-When-Then 
 
@@ -88,16 +134,6 @@ easy to follow and well organized. From [Wikipedia](https://en.wikipedia.org/wik
 * **Given** describes the preconditions and initial state before the start of a test and allows for any pre-test setup that may occur. 
 * **When** describes actions taken by a user during a test. 
 * **Then** describes the outcome resulting from actions taken in the **When** clause.
-
-#### Structuring Individual Tests
-
-
-
-### Test-Driving
-
-The concept of test-driving is central to the craft of TDD. 
-
-## Examples in Neato Code
 
 ## Resources
 

@@ -2,41 +2,31 @@
 
 #include "gtest/gtest.h"
 
-namespace {
-// In this example, we test the MyString class (a simple string).
+/**\file my_string_test.cc
+ *
+ * \test MyString Test Suite
+ *
+ * Type     | Test                   | Description
+ * :------- | :-------               | :---------
+ * Negative | DefaultConstructor     | c_string() returns NULL by default
+ * Positive | ConstructorFromCString | Verifies that the constructor accepts a C string
+ * Positive | CopyConstructor        | Verifies the copy constructor
+ * Positive | SetSimple              | Tests the Set method
+ * Positive | SetSame                | Tests the Set method using pointer to same input already in object
+ * Negative | SetNullPtr             | Tests the Set method with a nullptr
+ */
+namespace MyStringTests {
+    ////////////////////////////////////////////////////////////
+    // Constants
+    const char kHelloString[] = "Hello, world!";
 
-// Tests the default c'tor.
     TEST(MyString, DefaultConstructor) {
         const MyString s;
 
-        // Asserts that s.c_string() returns NULL.
-        //
-        // <TechnicalDetails>
-        //
-        // If we write NULL instead of
-        //
-        //   static_cast<const char *>(NULL)
-        //
-        // in this assertion, it will generate a warning on gcc 3.4.  The
-        // reason is that EXPECT_EQ needs to know the types of its
-        // arguments in order to print them when it fails.  Since NULL is
-        // #defined as 0, the compiler will use the formatter function for
-        // int to print it.  However, gcc thinks that NULL should be used as
-        // a pointer, not an int, and therefore complains.
-        //
-        // The root of the problem is C++'s lack of distinction between the
-        // integer number 0 and the null pointer constant.  Unfortunately,
-        // we have to live with this fact.
-        //
-        // </TechnicalDetails>
         EXPECT_STREQ(nullptr, s.c_string());
-
         EXPECT_EQ(0u, s.Length());
     }
 
-    const char kHelloString[] = "Hello, world!";
-
-// Tests the c'tor that accepts a C string.
     TEST(MyString, ConstructorFromCString) {
         const MyString s(kHelloString);
 
@@ -44,7 +34,6 @@ namespace {
         EXPECT_EQ(sizeof(kHelloString) / sizeof(kHelloString[0]) - 1, s.Length());
     }
 
-// Tests the copy c'tor.
     TEST(MyString, CopyConstructor) {
         const MyString s1(kHelloString);
 
@@ -53,7 +42,6 @@ namespace {
         EXPECT_EQ(0, strcmp(s2.c_string(), kHelloString));
     }
 
-// Tests the Set method.
     TEST(MyString, SetSimple) {
         MyString s;
 
@@ -62,27 +50,22 @@ namespace {
         EXPECT_EQ(0, strcmp(s.c_string(), kHelloString));
     }
 
-// Tests the Set method.
-    TEST(MyString, Set) {
+    TEST(MyString, SetSame) {
         MyString s;
-
         s.Set(kHelloString);
-
         EXPECT_EQ(0, strcmp(s.c_string(), kHelloString));
 
-        // Set should work when the input pointer is the same as the one
-        // already in the MyString object.
         s.Set(s.c_string());
+
         EXPECT_EQ(0, strcmp(s.c_string(), kHelloString));
     }
 
-// Tests the Set method.
     TEST(MyString, SetNullPtr) {
         MyString s;
-        s.Set(kHelloString);
 
+        s.Set(kHelloString);
         s.Set(nullptr);
 
         EXPECT_STREQ(nullptr, s.c_string());
     }
-}  // namespace
+}
